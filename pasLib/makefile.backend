@@ -1,12 +1,4 @@
-LIB_NAME := gTree
-
-ifndef PARALLEL
-PARALLEL := MPI
-endif
-
-ifndef ALLOW_DEBUG_EXT
-ALLOW_DEBUG_EXT := 0
-endif
+LIB_NAME := pas
 
 ifndef OPTLEVEL
 OPTLEVEL := 0
@@ -14,14 +6,6 @@ endif
 
 ifndef CUDA_ENABLE
 CUDA_ENABLE := 0
-endif
-
-ifndef PROBLEM_DIMENSION
-PROBLEM_DIMENSION := 2
-endif
-
-ifndef DEBUG_LEVEL
-DEBUG_LEVEL := 0
 endif
 
 CURRENT_BASEIDIR   = $(shell pwd)
@@ -33,16 +17,10 @@ CURRENT_DOC_DIR   := ${CURRENT_BASEIDIR}/docs
 CURRENT_TST_DIR   := ${CURRENT_BASEIDIR}/testing
 CURRENT_HDRHX_DIR := ${CURRENT_BASEIDIR}/includex
 
-#this path will need to be changed.
-CURRENT_SUB_DIR   := ${CURRENT_BASEIDIR}/..
-CURRENT_PTL_DIR   := ${CURRENT_SUB_DIR}/PropTreeLib
-
 
 IFLAGS_DEPENDENCIES :=
-IFLAGS_DEPENDENCIES += -I${CURRENT_PTL_DIR}/include
 
 LFLAGS_DEPENDENCIES :=
-LFLAGS_DEPENDENCIES += -L${CURRENT_PTL_DIR}/lib -lPropTreeLib
 
 CURRENT_IFLAGS := -I${CURRENT_HDR_DIR} -I${CURRENT_HDRHX_DIR}
 
@@ -58,7 +36,7 @@ HEADER_FILES_HX := $(shell find ${CURRENT_SRC_DIR} -name *.hx)
 TARGET := ${CURRENT_LIB_DIR}/lib${LIB_NAME}.a
 
 PY_EXE := $(shell which python3)
-CC_HOST := $(shell which mpicxx)
+CC_HOST := $(shell which g++)
 CC_DEVICE :=  $(shell which nvcc) -ccbin=${CC_HOST}
 ifneq (${PARALLEL}, MPI)
 CC_HOST := g++
@@ -140,7 +118,7 @@ export CC_HOST
 
 .PHONY: final
 
-final: ${DO_CLEAN} PTL setup ${TARGETNAME_CUDA} ${TARGETNAME_HYBRID_D} ${LINK_STEP} ${TARGETNAME_HYBRID_H} ${TARGETNAME_HOST}
+final: ${DO_CLEAN} setup ${TARGETNAME_CUDA} ${TARGETNAME_HYBRID_D} ${LINK_STEP} ${TARGETNAME_HYBRID_H} ${TARGETNAME_HOST}
 	${CC_HOST} -fPIC -shared ${CURRENT_OBJ_DIR}/*.o ${CURRENT_IFLAGS} ${IFLAGS_DEPENDENCIES} ${COMPILE_TIME_OPT} ${LZLIB} ${LCUDA} ${LFLAGS_DEPENDENCIES} -o ${TARGET}
 
 .SECONDEXPANSION:
@@ -161,9 +139,6 @@ ${TARGETNAME_CUDA}: ${CURRENT_OBJ_DIR}/%.o : $$(filter $$(MP)/$$*,$$(SRC_FILES_C
 
 ${LINK_STEP}:
 	${CC_DEVICE} ${DEVICE_DLINK_FLAGS} ${COMPILE_TIME_OPT} ${OBJ_FILES_HYBRID_DEVICE} ${OBJ_FILES_CUDA} -o ${CU_O_TARGET} -lcudadevrt
-
-PTL:
-	${MAKE} -C ${CURRENT_PTL_DIR} -f makefile
 
 setup:
 	echo ${AA}
@@ -187,8 +162,3 @@ clean:
 	-rm -r ${CURRENT_OBJ_DIR}
 	-rm -r ${CURRENT_HDR_DIR}
 	-rm -r ${CURRENT_HDRHX_DIR}
-
-test: final
-	@for tdir in $(wildcard ${CURRENT_TST_DIR}/*) ; do\
-		${MAKE} -C $${tdir} -f makefile test;\
-	done

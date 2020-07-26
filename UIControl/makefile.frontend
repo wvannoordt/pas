@@ -1,0 +1,5 @@
+CUR_DIR := $(shell pwd)
+
+
+setup:
+	cp -rf -t ${CUR_DIR} tcl/*.py
