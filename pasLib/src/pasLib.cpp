@@ -1,8 +1,15 @@
 #include "pasLib.h"
+#include <iostream>
 namespace pasLib
 {
-    void Dummy(void)
+    WindowRegistry registry;
+    void TestFunction(void)
     {
-        return;
+        std::cout << "hello from " << __FILE__ << std::endl;
+    }
+
+    void NewGraphicsWindow(std::string title)
+    {
+        registry.CreateNewGraphicsWindow(title);
     }
 }

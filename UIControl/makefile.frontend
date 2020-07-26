@@ -1,6 +1,5 @@
 CUR_DIR := $(shell pwd)
 
-
 setup:
 	@for fldr in ${CUR_DIR}/tcl/* ; do\
 		echo "Install from $${fldr}:";\
