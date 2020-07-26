@@ -6,6 +6,7 @@ class ImageHandler:
         self.assetPath = assetPath_in
         self.contents = {}
         self.AddAsset('add')
+        self.AddAsset('check')
 
     def AddAsset(self, key):
         self.contents[key] = tk.PhotoImage(file=self.GetAsset(key))

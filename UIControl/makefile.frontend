@@ -2,4 +2,7 @@ CUR_DIR := $(shell pwd)
 
 
 setup:
-	cp -rf -t ${CUR_DIR} tcl/*.py
+	@for fldr in ${CUR_DIR}/tcl/* ; do\
+		echo "Install from $${fldr}:";\
+		cp -rf -t ${CUR_DIR} $${fldr}/*.py; \
+	done
