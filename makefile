@@ -19,3 +19,6 @@ backend:
 
 frontend:
 	${MAKE} -C ${FRONTEND} -f makefile.frontend
+
+clean:
+	${MAKE} -C ${BACKEND} -f makefile.backend clean

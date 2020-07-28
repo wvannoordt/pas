@@ -21,11 +21,38 @@ static PyObject* pasLib_CreateNewGraphicsWindow(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
+static PyObject* pasLib_GLClose(PyObject *self, PyObject *args)
+{
+	pasLib::GLClose();
+	return Py_BuildValue("");
+}
+
+static PyObject* pasLib_Initialize(PyObject *self, PyObject *args)
+{
+	pasLib::Initialize();
+	return Py_BuildValue("");
+}
+
+static PyObject* pasLib_Finalize(PyObject *self, PyObject *args)
+{
+	pasLib::Finalize();
+	return Py_BuildValue("");
+}
+
+static PyObject* pasLib_GLWindowOpen(PyObject *self, PyObject *args)
+{
+	pasLib::GLWindowOpen();
+	return Py_BuildValue("");
+}
 
 static PyMethodDef pasLibMethods[] =
 {
 	{"TestFunction", pasLib_TestFunction, METH_VARARGS, "A test function."},
 	{"CreateNewGraphicsWindow", pasLib_CreateNewGraphicsWindow, METH_VARARGS, "Create new graphics window."},
+	{"GLWindowOpen", pasLib_GLWindowOpen, METH_VARARGS, "Open main graphics window."},
+	{"GLClose", pasLib_GLClose, METH_VARARGS, "Close OGL resources."},
+	{"Initialize", pasLib_Initialize, METH_VARARGS, "Initialize pasLib."},
+	{"Finalize", pasLib_Finalize, METH_VARARGS, "Finalize pasLib."},
 	{NULL, NULL, 0, NULL}        /* Sentinel */
 };
 

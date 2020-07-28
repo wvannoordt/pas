@@ -13,13 +13,16 @@ print("Attempting install from directory " + basedir + ":")
 Bsources = []
 Bsources.append('pasLib.cc')
 
+icuda = '/usr/local/cuda/include'
+lcuda = '/usr/local/cuda/lib64'
+
 include_pas = os.path.join(basedir, 'pasLib/include')
 link_pas = os.path.join(basedir, 'pasLib/lib')
 
 module1 = Extension('pasLib',
-					include_dirs = [include_pas],
-                    libraries = ['pas'],
-                    library_dirs = [link_pas],
+					include_dirs = [include_pas, icuda],
+                    libraries = ['pas', 'cudadevrt', 'cudart', 'glut', 'GL', 'GLU', 'GLEW'],
+                    library_dirs = [link_pas, lcuda],
                     sources = Bsources)
 
 setup (name = 'pasLib',

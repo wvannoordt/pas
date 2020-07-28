@@ -9,7 +9,7 @@ namespace pasLib
 
     GraphicsWindow::~GraphicsWindow(void)
     {
-
+        this->Destroy();
     }
 
     void GraphicsWindow::Destroy(void)
