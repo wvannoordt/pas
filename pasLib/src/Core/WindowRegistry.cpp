@@ -15,8 +15,12 @@ namespace pasLib
 
     void WindowRegistry::CreateNewGraphicsWindow(std::string title)
     {
-        
         windows.insert({title, new GraphicsWindow(title)});
+    }
+    
+    WindowBuffer* WindowRegistry::GetBufferObj(void)
+    {
+        return &bufferObj;
     }
 
     WindowRegistry::~WindowRegistry(void)

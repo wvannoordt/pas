@@ -5,6 +5,9 @@ MAIN := ${CUR_DIR}/UIControl/main.py
 FRONTEND := $(shell pwd)/UIControl
 BACKEND := $(shell pwd)/pasLib
 
+.PHONY: main
+main: setup
+
 run: setup
 	${LAUNCHER}
 

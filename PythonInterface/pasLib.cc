@@ -21,10 +21,28 @@ static PyObject* pasLib_CreateNewGraphicsWindow(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
+
+static PyObject* pasLib_InitGraphicsBuffer(PyObject *self, PyObject *args)
+{
+	int wid, hei;
+	if (!PyArg_ParseTuple(args, "ii", &wid, &hei)) {return NULL;}
+	pasLib::InitGraphicsBuffer(wid, hei);
+	return Py_BuildValue("");
+}
+
+static PyObject* pasLib_OnDisplay(PyObject *self, PyObject *args)
+{
+	pasLib::OnDisplay();
+	return Py_BuildValue("");
+}
+
+
 static PyMethodDef pasLibMethods[] =
 {
 	{"TestFunction", pasLib_TestFunction, METH_VARARGS, "A test function."},
 	{"CreateNewGraphicsWindow", pasLib_CreateNewGraphicsWindow, METH_VARARGS, "Create new graphics window."},
+	{"InitGraphicsBuffer", pasLib_InitGraphicsBuffer, METH_VARARGS, "Initialize the image pixel buffer."},
+	{"OnDisplay", pasLib_OnDisplay, METH_VARARGS, "Renders current objects to the display buffer."},
 	{NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
